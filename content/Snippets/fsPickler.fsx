@@ -1,4 +1,7 @@
-(** FsPickler can be used to "serialize" functions: *)
+(** 
+# FsPickler
+FsPickler can be used to "serialize" functions: 
+*)
 open MBrace.FsPickler
 open MBrace.FsPickler.Json
 
