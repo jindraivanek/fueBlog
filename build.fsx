@@ -9,7 +9,7 @@ open Fue.Data
 open Fue.Compiler
 open Fake
 
-let run() =
+Target "All" ( fun _ ->
     let source = __SOURCE_DIRECTORY__
 
     let saveOutput path text = File.WriteAllText(source @@ "output" @@ path, text)
@@ -46,6 +46,7 @@ let run() =
     |> Seq.map (fun x -> x + ".html")
     |> Seq.iter (fun x -> fue x |> saveOutput x)
 
-    CopyRecursive (source @@ "include") (source @@ "output") true
+    CopyRecursive (source @@ "include") (source @@ "output") true |> ignore
+)
 
-run()
+RunTargetOrDefault "All"
