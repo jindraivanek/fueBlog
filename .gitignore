@@ -185,4 +185,4 @@ FakesAssemblies/
 .paket/paket.exe
 .fake/**
 paket-files/**
-output/**
+output**
