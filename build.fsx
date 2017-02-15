@@ -9,6 +9,10 @@ open Fue.Data
 open Fue.Compiler
 open Fake
 
+type Category =
+    | Active of string
+    | Inactive of string
+
 Target "All" ( fun _ ->
     let source = __SOURCE_DIRECTORY__
 
@@ -27,24 +31,25 @@ Target "All" ( fun _ ->
         |> Seq.map Literate.WriteHtml
         |> Seq.toArray
 
-    let rec fue path =
+    let rec fue page path =
         init
         |> add "site.title" Config.siteTitle
         |> add "site.tagline" Config.siteTagLine
         |> add "site.description" Config.siteDescription
-        |> add "page.title" "Home"
-        |> add "isHomePage" true
-        |> add "include" fue
-        |> add "categories" categories
-        |> addMany (categories |> List.map (fun c -> ("posts-" + c), (getPosts c :> obj)))
         |> add "githubUrl" Config.githubUrl
         |> add "twitterUrl" Config.twitterUrl
+        |> add "page.title" page
+        |> add "isHomePage" (page="index")
+        |> add "include" (fue page)
+        |> add "categories" (categories |> Seq.map (fun c -> if c=page then Active c else Inactive c))
+        |> add "getPosts" getPosts
         |> add "formatTime" (fun (format:string) -> System.DateTime.Now.ToString format)
+        |> add "eq" (fun (x,y) -> x=y)
         |> fromFile (source @@ "layouts" @@ path)
 
     "index" :: categories
-    |> Seq.map (fun x -> x + ".html")
-    |> Seq.iter (fun x -> fue x |> saveOutput x)
+    |> Seq.map (fun x -> x, x + ".html")
+    |> Seq.iter (fun (x, path) -> fue x path |> saveOutput path)
 
     CopyRecursive (source @@ "include") (source @@ "output") true |> ignore
 )

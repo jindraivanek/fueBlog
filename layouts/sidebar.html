@@ -29,8 +29,12 @@
       </nav>-->
 
       <nav class="sidebar-nav">
-          <a class="sidebar-nav-item" href="index.html">Home</a>
-          <a class="sidebar-nav-item" fs-for="category in categories" href="{{{category}}}.html">{{{category}}}</a>
+          <a fs-if="isHomePage" class="sidebar-nav-item active" href="index.html">Home</a>
+          <a fs-else class="sidebar-nav-item" href="index.html">Home</a>
+          <fs-template fs-for="category in categories">
+          <a fs-du="category" fs-case="Active(x)" class="sidebar-nav-item active" href="{{{x}}}.html">{{{x}}}</a>
+          <a fs-du="category" fs-case="Inactive(x)" class="sidebar-nav-item" href="{{{x}}}.html">{{{x}}}</a>
+          </fs-template>
       </nav>
 
       <div>
