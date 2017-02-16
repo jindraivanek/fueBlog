@@ -9,14 +9,17 @@ open Fue.Data
 open Fue.Compiler
 open Fake
 
-type Category =
-    | Active of string
-    | Inactive of string
+type Category = {
+    Name: string
+    Active: bool
+}
 
 Target "All" ( fun _ ->
     let source = __SOURCE_DIRECTORY__
 
-    let saveOutput path text = File.WriteAllText(source @@ "output" @@ path, text)
+    let saveOutput path text = 
+        printfn "Creating %s." path
+        File.WriteAllText(source @@ "output" @@ path, text)
 
     let categories = DirectoryInfo(source @@ "content").GetDirectories() |> Seq.map (fun d -> d.Name) |> Seq.toList
 
@@ -41,7 +44,7 @@ Target "All" ( fun _ ->
         |> add "page.title" page
         |> add "isHomePage" (page="index")
         |> add "include" (fue page)
-        |> add "categories" (categories |> Seq.map (fun c -> if c=page then Active c else Inactive c))
+        |> add "categories" (categories |> Seq.map (fun c -> {Name = c; Active = c=page}))
         |> add "getPosts" getPosts
         |> add "formatTime" (fun (format:string) -> System.DateTime.Now.ToString format)
         |> add "eq" (fun (x,y) -> x=y)
