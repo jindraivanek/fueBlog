@@ -29,11 +29,24 @@
       </nav>-->
 
       <nav class="sidebar-nav">
-          <a fs-if="isHomePage" class="sidebar-nav-item active" href="index.html">Home</a>
-          <a fs-else class="sidebar-nav-item" href="index.html">Home</a>
+          <a class="sidebar-nav-item" href="index.html">
+            <div fs-if="isHomePage" class="active">
+              Home
+            </div>
+            <div fs-else>
+              Home
+            </div>
+          </a>
+
           <fs-template fs-for="category in categories">
-          <a fs-du="category" fs-case="Active(x)" class="sidebar-nav-item active" href="{{{x}}}.html">{{{x}}}</a>
-          <a fs-du="category" fs-case="Inactive(x)" class="sidebar-nav-item" href="{{{x}}}.html">{{{x}}}</a>
+            <a class="sidebar-nav-item" href="{{{category.Name}}}.html">
+              <div fs-if="category.Active" class="active">
+                {{{category.Name}}}
+              </div>
+              <div fs-else>
+                {{{category.Name}}}
+              </div>
+            </a>
           </fs-template>
       </nav>
 
