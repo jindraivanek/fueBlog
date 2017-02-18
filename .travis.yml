@@ -1,5 +1,12 @@
 language: csharp
-sudo: false 
+sudo: false
 script:
-  - ./init.sh
-  - ./build.sh
+- "./init.sh"
+- "./build.sh"
+deploy:
+  provider: releases
+  api_key:
+    secure: A/Xaq4PZW+/VQpaPAentmWB43i4a5S7wcGRUZtvC+NgwpJhu+vu7OWuncpC+vmFewbwUQMH/K9I2eHgeVMxDJ+/URnbgOHjPOao3JLZzaTZfetssBODbpf1tVU5xVlvsphranUnrVtxLSEIbN+c/TQaFF4GLdwIDZ0vpw1or0ZgY7/wD7r/EEt/XJjNgR/MRiXuZoqmTtqRLApT/EBYEscr7VHyaMK8ah4TQ8tEp1y5pAsAED0xkbSrfCk+4SIK4iUL5p1pwdQj7gJAX2nF2xnDytmZQkgPvn8FKPS7gA1hxvR28cp+9rY62oN1zN3sXxKryTe6VM6XlZpH2JWbnTrsyuT5bp2rEjrm+zwqTPucGi5gakk2kcOeVlxLJsFI1SY0xoXqXiiFAF/tQhPm4rponyv1g9Mg5P0EcYDHvLl4+ceqO9MZigHkiJiJDO5uw/I5NlHUlnWGO5E6ODlyNo3z2P75OprZYcM0En8sNkRbMM8tWVCqz5oMPgNYovf+/JcGhiya3RfFjliJPzFswtcDThZ+g3ofHMsDFxkKNki4YcU42DXV0re5RvaDGcejv6f14PTRJ3GkbuoY3714g6yV+heauYzk6PU7q3kcJqyppZIlSC90KnnzFp2Y33UKtNaklRyE1pdymzdp8+1KlbJA/LMZVLSKzhnUcDtJJeYE=
+  file: deploy/output.zip
+  on:
+    repo: jindraivanek/fueBlog

@@ -21,4 +21,4 @@ function run() {
   fi
 }
 
-run packages/FAKE/tools/FAKE.exe build.fsx
+run packages/FAKE/tools/FAKE.exe build.fsx $@

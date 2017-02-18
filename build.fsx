@@ -13,11 +13,10 @@ type Category = {
     Name: string
     Active: bool
 }
+let source = __SOURCE_DIRECTORY__
+let outputPath = source @@ Config.outputPath
 
-Target "All" ( fun _ ->
-    let source = __SOURCE_DIRECTORY__
-    let outputPath = source @@ Config.outputPath
-
+Target "Build" ( fun _ ->
     CreateDir outputPath
 
     let saveOutput path text = 
@@ -58,6 +57,17 @@ Target "All" ( fun _ ->
     |> Seq.iter (fun (x, path) -> fue x path |> saveOutput path)
 
     CopyRecursive (source @@ "include") outputPath true |> ignore
+    
 )
+
+Target "Deploy" (fun _ ->
+    CreateDir (source @@ "deploy")
+    Zip outputPath (source @@ "deploy" @@ "output.zip") (!! (outputPath @@ "**/*") --(outputPath @@ ".git/**"))
+)
+
+Target "All" id
+
+"Build" ==> "All"
+"Deploy" ==> "All"
 
 RunTargetOrDefault "All"
