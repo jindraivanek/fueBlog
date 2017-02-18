@@ -7,7 +7,8 @@ let memoize (f: 'a -> 'b) =
     fun x ->
         cache.GetOrAdd(x, lazy (f x)).Force()
 
-// This works, but emit warning: This and other recursive references to the object(s) being defined will be checked for initialization-soundness at runtime through the use of a delayed reference.
+// This works, but emit warning: This and other recursive references to the object(s) being defined 
+// will be checked for initialization-soundness at runtime through the use of a delayed reference.
 let rec fib' = memoize <| fun n -> if n<1 then 1 else fib' (n-1) + fib' (n-2)
 
 (**
