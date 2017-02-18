@@ -16,10 +16,13 @@ type Category = {
 
 Target "All" ( fun _ ->
     let source = __SOURCE_DIRECTORY__
+    let outputPath = source @@ Config.outputPath
+
+    CreateDir outputPath
 
     let saveOutput path text = 
         printfn "Creating %s." path
-        File.WriteAllText(source @@ "output" @@ path, text)
+        File.WriteAllText(outputPath @@ path, text)
 
     let categories = DirectoryInfo(source @@ "content").GetDirectories() |> Seq.map (fun d -> d.Name) |> Seq.toList
 
@@ -54,7 +57,7 @@ Target "All" ( fun _ ->
     |> Seq.map (fun x -> x, x + ".html")
     |> Seq.iter (fun (x, path) -> fue x path |> saveOutput path)
 
-    CopyRecursive (source @@ "include") (source @@ "output") true |> ignore
+    CopyRecursive (source @@ "include") outputPath true |> ignore
 )
 
 RunTargetOrDefault "All"

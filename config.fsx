@@ -4,3 +4,5 @@ let siteDescription = ""
 
 let githubUrl = Some "https://github.com/jindraivanek"
 let twitterUrl = Some "https://twitter.com/jindraivanek"
+
+let outputPath = "output"
