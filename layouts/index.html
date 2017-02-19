@@ -9,9 +9,11 @@
 
     <div class="content container">
       <div class="posts">
-        <div fs-for="post in getPosts('Blog')'" class="post">
-          {{{ post }}}
-        </div>
+        <fs-template fs-for="post in getPosts('Blog')">
+          <a href="Blog_{{{post.Filename}}}.html">
+          <div class="post"> {{{ post.Html }}} </div>
+          </a>
+        </fs-template>
       </div>
     </div>
     {{{ include "google_analytics.html" }}}
