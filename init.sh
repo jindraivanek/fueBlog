@@ -21,7 +21,7 @@ function run() {
   fi
 }
 
-run .paket/paket.bootstrapper.exe
+run .paket/paket.bootstrapper.exe --prefer-nuget
 
 if [[ "$OS" != "Windows_NT" ]] &&
        [ ! -e ~/.config/.mono/certs ]
